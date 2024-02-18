@@ -11,17 +11,17 @@ const router = Router({ mergeParams: true });
 
 router.route('/')
   .get(
-    currentUser as RequestHandler,
+    currentUser,
     authorize,
     index);
 
 router.post(
   '/:id/verify',
-  currentUser as RequestHandler,
+  currentUser,
   authorize,
   ...itemsValidations.verify,
   requestValidator,
-  verify as RequestHandler,
+  verify,
 );
 
 export const itemsRouter = Router({ mergeParams: true }).use('/items', router);

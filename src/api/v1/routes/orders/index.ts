@@ -1,23 +1,20 @@
 import { type RequestHandler, Router } from 'express';
 
-import { create } from '../../controllers/auth/create';
 import { requestValidator } from '../../../../middlewares/request-validator';
-import { authValidations } from '../../request-validations/auth';
+import { ordersValidations } from '../../request-validations/orders';
 import { currentUser } from '../../../../middlewares/current-user';
 import { authorize } from '../../../../middlewares/authorize';
-import { index } from '../../controllers/auth';
+import { create } from '../../controllers/orders/create';
 
 const router = Router({ mergeParams: true });
 
 router.route('/')
-  .get(
+  .post(
     currentUser,
     authorize,
-    index)
-  .post(
-    ...authValidations.create,
+    ...ordersValidations.create,
     requestValidator,
-    create,
+    create
   );
 
-export const authRouter = Router({ mergeParams: true }).use('/auth', router);
+export const orderRouter = Router({ mergeParams: true }).use('/orders', router);

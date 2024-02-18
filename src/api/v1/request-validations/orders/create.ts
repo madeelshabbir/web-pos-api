@@ -1,15 +1,12 @@
 import { body } from 'express-validator';
 
 export const create = [
-  body('username')
-    .isString()
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage('Required'),
-  body('password')
+  body('itemId')
     .isString()
     .not()
     .isEmpty()
     .withMessage('Required'),
+  body('price')
+    .isFloat({ min: 1 })
+    .withMessage('must be at least 1'),
 ];

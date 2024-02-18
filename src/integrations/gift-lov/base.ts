@@ -23,7 +23,7 @@ export abstract class GiftLovBase extends Base {
     headers: Partial<Record<RequestHeaderKey, string>> = {},
   ): Promise<R> {
     const response = await super.request<T, R>(
-      route, method, params, body, this.headers(route, method, params, headers)
+      route, method, params, body, this.headers(route, method, { ...params, ...body }, headers)
     );
     return response;
   }
@@ -35,7 +35,7 @@ export abstract class GiftLovBase extends Base {
   protected headers(
     route: string,
     method: RequestMethod,
-    params: Record<string,  string> = {},
+    params: Record<string,  any> = {},
     headers: Partial<Record<RequestHeaderKey, string>> = {
       [RequestHeaderKey.AUTHORIZATION]: ''
     },
