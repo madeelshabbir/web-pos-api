@@ -18,6 +18,6 @@ router.route('/')
     ...authValidations.create,
     requestValidator,
     create as RequestHandler,
-  )
+  );
 
 export const authRouter = Router({ mergeParams: true }).use('/auth', router);

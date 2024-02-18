@@ -29,7 +29,6 @@ export const currentUser = async (
 
   if (token) {
     const user = await new AuthorizationApi().checkToken(token);
-    delete user.token;
     req.currentUser = user;
   }
 
