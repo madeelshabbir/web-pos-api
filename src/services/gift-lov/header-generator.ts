@@ -10,13 +10,31 @@ export namespace GiftLovHeaderGenerator {
     giftlovDate: string,
     params: Record<string,  string> = {},
   ) => {
-    const paramsStr = Object.values(params).sort().join('');
+    const paramsStr = extractValues(params).sort().join('');
     const content = `${route}${method}${paramsStr}${giftlovDate}${token}`;
 
     const hmacSha512 = createHmac('sha512', process.env.GIFT_LOV_SECRET!);
     hmacSha512.update(content, 'utf-8');
 
     return hmacSha512.digest().toString('hex').toLowerCase();
+  }
+
+  export const extractValues = (obj: Record<string, any>): Array<string | number> => {
+    const values = [];
+
+    for (const key in obj) {
+      if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+        values.push(...extractValues(obj[key]));
+      } else if (Array.isArray(obj[key])) {
+        obj[key].forEach((item: any) => {
+          values.push(...extractValues(item));
+        });
+      } else {
+        values.push(obj[key]);
+      }
+    }
+
+    return values;
   }
 
   export const generateDateString = () => {
