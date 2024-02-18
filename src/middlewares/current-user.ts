@@ -28,8 +28,9 @@ export const currentUser = async (
   const { token } = (jwt.verify(jwtToken, process.env.GIFT_LOV_SECRET!) ?? {}) as { token?: string };
 
   if (token) {
-    const response = await new AuthorizationApi().checkToken(token);
-    req.currentUser = response.data;
+    const user = await new AuthorizationApi().checkToken(token);
+    delete user.token;
+    req.currentUser = user;
   }
 
   next();
