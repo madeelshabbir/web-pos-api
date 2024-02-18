@@ -6,10 +6,10 @@ export const create = [
     .trim()
     .not()
     .isEmpty()
-    .withMessage('is missing.'),
+    .withMessage('Required'),
   body('password')
     .isString()
     .not()
     .isEmpty()
-    .withMessage('is missing.'),
+    .withMessage('Required'),
 ];

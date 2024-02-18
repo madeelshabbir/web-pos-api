@@ -5,8 +5,8 @@ export const create = [
     .isString()
     .not()
     .isEmpty()
-    .withMessage('is missing.'),
+    .withMessage('Required'),
   body('price')
-    .isFloat({ min: 0 })
-    .withMessage('must be non negative.'),
+    .isFloat({ min: 1 })
+    .withMessage('must be at least 1'),
 ];
