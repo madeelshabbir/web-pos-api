@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { RequestMethod } from '../types/enums/request-method';
 import { ServiceUnavailableError } from '../errors/service-unavailable-error';
@@ -25,7 +25,7 @@ export abstract class Base {
     headers: Partial<Record<RequestHeaderKey, string>> = {}
   ): Promise<R | never> {
     try {
-      const response = await this.axios.request<T, R>({
+      const response = await this.axios.request<T, AxiosResponse<R>>({
         url: route,
         method,
         params,
@@ -33,7 +33,7 @@ export abstract class Base {
         headers,
       });
 
-      return response;
+      return response.data;
     } catch (err: any) {
       if (err.response) {
         throw new UnprocessableEntityError(err.response.data.message);
